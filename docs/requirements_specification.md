@@ -1,4 +1,5 @@
-Requirements Specification
+# Requirements Specification
+
 ---
 
 The text generator aims to accomplish natural language generation using Markov chains.
@@ -19,7 +20,7 @@ Firstly the input file requires a reliable way of tokenizing. Secondly, it needs
 
 ## General Information
 My major/study track is tietojenkäsittelytieteen kandidaatti (TKT).
-English is the language of choice for the project.
+English is the language of choice for this project.
 
 ## Sources:
 

@@ -1,4 +1,4 @@
-# Creative Computation
+# Text Generator
 
 ---
 
