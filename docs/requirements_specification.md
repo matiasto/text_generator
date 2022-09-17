@@ -6,7 +6,7 @@ The text generator aims to accomplish natural language generation using Markov c
 
 ## Language
 
-The primary programming language used is Python, with the possible addition of SQL to manage data. Other proficient languages include JavaScript. 
+The primary programming language used is Python. Other proficient languages include JavaScript. 
 
 ## Algorithms
 
