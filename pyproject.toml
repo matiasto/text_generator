@@ -7,6 +7,7 @@ authors = ["Matias Tolppanen <matias.tolppanen@helsinki.fi>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 invoke = "^1.7.1"
+nltk = "^3.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
