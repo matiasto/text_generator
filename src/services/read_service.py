@@ -20,7 +20,7 @@ class ReadService:
             "Frankenstein": "frankenstein.txt",
             "Moby Dick": "moby_dick.txt",
             "Sherlock Holmes": "sherlock_holmes.txt"
-            }
+        }
         self.__text = None
         self.__path = os.path.join(
             os.path.dirname(__file__), "../data/")
