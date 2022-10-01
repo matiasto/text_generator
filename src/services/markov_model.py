@@ -12,7 +12,7 @@ class MarkovModel:
         train (func): Trains the Markov chain
     """
 
-    def __init__(self, cleaned_text: list, order: int) -> None:
+    def __init__(self, cleaned_text: list, degree: int) -> None:
         """Initializes the Markov chain
 
         Args:
@@ -21,9 +21,15 @@ class MarkovModel:
         """
 
         self.__cleaned_text = cleaned_text
-        self.__order = order
+        self.__degree = degree
         self.__model = Trie()
         self.__train()
+
+    @property
+    def degree(self) -> int:
+        """Returns the degree of the Markov chain"""
+
+        return self.__degree
 
     @property
     def model(self) -> dict:
@@ -35,7 +41,7 @@ class MarkovModel:
         """Returns a random starting sequence from the Trie data structure"""
 
         sequence = []
-        for _ in range(self.__order):
+        for _ in range(self.__degree):
             children = self.__model.get_children(sequence)
             sequence.append(choice(list(children.keys())))
         return sequence
@@ -43,7 +49,7 @@ class MarkovModel:
     def __build_model(self) -> None:
         """Builds the Markov chain"""
 
-        order = self.__order + 1
+        order = self.__degree + 1
         for i in range(len(self.__cleaned_text) - order):
             state = tuple(self.__cleaned_text[i:i + order])
             self.__model.insert(state)

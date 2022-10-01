@@ -21,6 +21,7 @@ class ReadService:
             "Moby Dick": "moby_dick.txt",
             "Sherlock Holmes": "sherlock_holmes.txt"
         }
+        self.__title = None
         self.__text = None
         self.__path = os.path.join(
             os.path.dirname(__file__), "../data/")
@@ -29,7 +30,13 @@ class ReadService:
     def available_stories(self) -> list:
         """Returns the names of the stories"""
 
-        return list(self.__files.keys())
+        return {index: value for (index, value) in enumerate(self.__files.keys())}
+
+    @property
+    def title(self) -> str:
+        """Returns the title of the story"""
+
+        return self.__title
 
     @property
     def text(self) -> list:
@@ -45,6 +52,7 @@ class ReadService:
             story (str): The name of the story
         """
 
+        self.__title = story
         story_file = self.__files[story]
         with open(self.__path + story_file, "r", encoding="utf-8") as file:
             self.__text = file.readlines()
