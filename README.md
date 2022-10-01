@@ -2,7 +2,7 @@
 
 ---
 
-[Latest Week Report](./docs/weekly_reports/week_3.md)
+[Latest Week Report](./docs/weekly_reports/week_4.md)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -68,3 +68,4 @@ For detailed instructions visit [instructions](./docs/instructions.md)
     - [Week 1](./docs/weekly_reports/week_1.md)
     - [Week 2](./docs/weekly_reports/week_2.md)
     - [Week 3](./docs/weekly_reports/week_3.md)
+    - [Week 4](./docs/weekly_reports/week_4.md)
