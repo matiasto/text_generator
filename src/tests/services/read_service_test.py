@@ -9,6 +9,10 @@ class TestReadService(unittest.TestCase):
     def test_object_exists(self):
         self.assertIsNotNone(self.text_service)
 
+    def test_title(self):
+        self.text_service.text = "Alice in Wonderland"
+        self.assertEqual(self.text_service.title, "Alice in Wonderland")
+
     def test_available_stories(self):
         self.assertEqual(len(self.text_service.available_stories), 4)
 

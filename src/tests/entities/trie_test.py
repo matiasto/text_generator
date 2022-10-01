@@ -14,7 +14,8 @@ class TestTrieNode(unittest.TestCase):
 
     def test_insert(self):
         self.trie.insert(("a", "b", "c"))
-        self.assertTrue(self.trie.root.children["a"].children["b"].children["c"].is_sequence)
+        self.assertTrue(
+            self.trie.root.children["a"].children["b"].children["c"].is_sequence)
 
     def test_get_children(self):
         self.trie.insert(("a", "b", "c"))
