@@ -9,19 +9,19 @@ class GenerateService:
     Attributes:
         start_state (str): The starting state of the model
         limit (int): The number of words to be generated
-        model (dict): The model to be used for generating text
-        order (int): The order of the model
+        model (object): The model to be used for generating text
+        degree (int): The degree of the model
         generated_text (str): The generated text
         generate (function): The function that generates the text
     """
 
-    def __init__(self, start_state: str, model: object, order: int, limit=10) -> None:
+    def __init__(self, start_state: str, model: object, degree: int, limit=10) -> None:
         """Inits GenerateService with the start state, model and limit
 
         Args:
             start_state (str): The starting state of the model
-            model (dict): The model to be used for generating text
-            order (int): The order of the model
+            model (object): The model to be used for generating text
+            degree (int): The degree of the model
             limit (int, optional): The limit of how many keys are
                                     picked from the model. Defaults to 10.
         """
@@ -29,7 +29,7 @@ class GenerateService:
         self.__start_state = start_state
         self.__limit = limit
         self.__model = model
-        self.__order = order
+        self.__degree = degree
         self.__generated_text = ""
         self.__generate()
 
@@ -57,7 +57,7 @@ class GenerateService:
 
         sequence = self.__start_state
         for _ in range(self.__limit):
-            children = self.__model.get_children(sequence[-self.__order:])
+            children = self.__model.get_children(sequence[-self.__degree:])
             probability = self.__calculate_probability(children)
             word = choices(list(probability.keys()),
                            list(probability.values()))[0]

@@ -30,7 +30,7 @@ class ReadService:
     def available_stories(self) -> list:
         """Returns the names of the stories"""
 
-        return {index: value for (index, value) in enumerate(self.__files.keys())}
+        return dict(enumerate(self.__files.keys()))
 
     @property
     def title(self) -> str:

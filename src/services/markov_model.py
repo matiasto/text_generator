@@ -7,9 +7,9 @@ class MarkovModel:
 
     Attributes:
         cleaned_text (str): The cleaned text
-        order (int): The order of the Markov chain
+        degree (int): The order/degree of Markov chain.
         model (dict): The Markov chain
-        train (func): Trains the Markov chain
+        build_model (func): Builds the Markov chain
     """
 
     def __init__(self, cleaned_text: list, degree: int) -> None:
@@ -17,13 +17,13 @@ class MarkovModel:
 
         Args:
             cleaned_text (list): The cleaned text
-            order (int, optional): The order/degree of Markov chain.
+            degree (int): The order/degree of Markov chain.
         """
 
         self.__cleaned_text = cleaned_text
         self.__degree = degree
         self.__model = Trie()
-        self.__train()
+        self.__build_model()
 
     @property
     def degree(self) -> int:
@@ -33,7 +33,7 @@ class MarkovModel:
 
     @property
     def model(self) -> dict:
-        """Returns the Markov chain in dictionary format"""
+        """Returns the trained Markov model"""
 
         return self.__model
 
@@ -53,11 +53,3 @@ class MarkovModel:
         for i in range(len(self.__cleaned_text) - order):
             state = tuple(self.__cleaned_text[i:i + order])
             self.__model.insert(state)
-
-    def __train(self) -> None:
-        """Trains the Markov chain
-
-        Builds the Markov chain and adds the frequencies of each state
-        """
-
-        self.__build_model()
