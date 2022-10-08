@@ -2,7 +2,7 @@
 
 ---
 
-[Latest Week Report](./docs/weekly_reports/week_4.md)
+[Latest Week Report](./docs/weekly_reports/week_5.md)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -23,11 +23,7 @@ todo
     ```bash
     poetry install
     ````
-3. Build,
-    ```bash
-    poetry run invoke build
-    ````
-4. Start the application,
+3. Start the application,
     ```bash
     poetry run invoke start
     ````
@@ -69,3 +65,4 @@ For detailed instructions visit [instructions](./docs/instructions.md)
     - [Week 2](./docs/weekly_reports/week_2.md)
     - [Week 3](./docs/weekly_reports/week_3.md)
     - [Week 4](./docs/weekly_reports/week_4.md)
+    - [Week 5](./docs/weekly_reports/week_5.md)
