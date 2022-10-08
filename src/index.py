@@ -10,7 +10,7 @@ def main():
     """
 
     window = Tk()
-    window.title('WeatherApp')
+    window.title('Text Generator')
 
     ui_view = UI(window)
     ui_view.start()

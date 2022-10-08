@@ -11,7 +11,7 @@ class TestMarkovModel(unittest.TestCase):
 
     def test_object_exists(self):
         self.assertIsNotNone(self.markov_model)
-    
+
     def test_get_degree(self):
         self.assertEqual(self.markov_model.degree, 2)
 
