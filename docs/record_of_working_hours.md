@@ -8,4 +8,5 @@ Record of Working Hours
 | 17.9.  | 6     | Markov chain, text generation, and docs                |
 | 1.10.  | 8     | UI, tests                                              |
 | 8.10.  | 8     | UI, docs                                               |
-| Total  | 32    |                                                        |
+| 15.10. | 8     | docs                                                   |
+| Total  | 40    |                                                        |

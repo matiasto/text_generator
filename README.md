@@ -2,7 +2,7 @@
 
 ---
 
-[Latest Week Report](./docs/weekly_reports/week_5.md)
+[Latest Week Report](./docs/weekly_reports/week_6.md)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -38,6 +38,10 @@ For detailed instructions visit [instructions](./docs/instructions.md)
     ```bash
     poetry run invoke test
     ````
+- Run performance tests
+    ```bash
+    poetry run invoke performance
+    ````
 - Generate coverage report
     ```bash
     poetry run invoke coverage-report
@@ -66,3 +70,4 @@ For detailed instructions visit [instructions](./docs/instructions.md)
     - [Week 3](./docs/weekly_reports/week_3.md)
     - [Week 4](./docs/weekly_reports/week_4.md)
     - [Week 5](./docs/weekly_reports/week_5.md)
+    - [Week 6](./docs/weekly_reports/week_6.md)
