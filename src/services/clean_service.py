@@ -30,34 +30,42 @@ class CleanService:
 
         return self.__clean_text
 
-    def __clean(self) -> None:
-        """Cleans the text and tokenizes it into a list of words
+    def __remove_meta_info(self) -> None:
+        """Removes meta information from the text"""
 
-        Loops trough the text and ignores copyright information and other
-        non-textual information from the text. Then converts all characters
-        to lowercase and removes punctuation and other disallowed characters.
-        Finally, tokenizes the text into a list of words.
-        """
-
-        cleaned_txt = []
-        book_text = False
+        text = None
+        is_book_text = False
         for line in self.__text:
             if re.match(r"\*\*\* END OF THE PROJECT GUTENBERG EBOOK .+ \*\*\*", line):
-                book_text = False
+                is_book_text = False
                 continue
             if re.match(r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .+ \*\*\*", line):
-                book_text = True
+                is_book_text = True
                 continue
-            if book_text:
-                line = line.lower()
-                disallowed_characters = ",.\"\'_@#$%^&*(){}/;~:<>+=\\"
-                line = line.translate(
-                    {ord(c): None for c in disallowed_characters})
-                tokens = line.split()
-                cleaned_txt += tokens
-        self.__clean_text = cleaned_txt
+            if is_book_text:
+                if text is None:
+                    text = line
+                else:
+                    text += line
+        self.__text = text
+
+    def __clean(self) -> None:
+        """Cleans the text"""
+
+        self.__text = re.sub(r'--', ' ', self.__text)
+        self.__text = re.sub('[\[].*?[\]]', '', self.__text)
+        self.__text = re.sub(r'(\b|\s+\-?|^\-?)(\d+|\d*\.\d+)\b','', self.__text)
+        self.__text = ' '.join(self.__text.split())
+
+    def __tokenize(self) -> None:
+        """Tokenizes the text into a list of words"""
+
+        self.__clean_text = self.__text.split()
 
     def __intialize(self) -> None:
         """Initializes the CleanService"""
 
+        self.__remove_meta_info()
         self.__clean()
+        self.__tokenize()
+
