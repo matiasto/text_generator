@@ -28,6 +28,7 @@ The app's general structure follows a three-layered model.
         services --> entities
 ```
 The UI component includes everything related to user interface elements. This part only displays data retrieved from service elements. The service elements implement the app logic, this includes the retrieval of base data, cleaning, generating the Markov Model, and generating the text. The task of entities is to represent the Markov Chain in Trie data structure format.
+
 [Back to Top](#architecture-description)
 
 ---
@@ -46,6 +47,7 @@ The user interface consists of view(s) and frames. View(s), managed by the UI el
         MainView --o LoadingFrame
 ```
 In total, the app includes a view that manages the frames. The frames exclusively view data to the user and pass inputs to MainView. Given user input, the Frame in question passes that information to the MainView, where data is processed using Service components. The main view utilizes threading to show a loading frame while the action occurs in service components.
+
 [Back to Top](#architecture-description)
 
 ---
@@ -64,6 +66,7 @@ In total, the app includes a view that manages the frames. The frames exclusivel
         ReadService --> data_folder: read text
 ```
 The ReadService retrieves book data by title from the data folder and provides all the available sources to UI.
+
 [Back to Top](#architecture-description)
 
 ---
@@ -83,6 +86,7 @@ The ReadService retrieves book data by title from the data folder and provides a
         CleanService ->> MainView: tokenized text in list format
 ```
 The CleanService is responsible for removing excess characters and symbols and tokenizing the cleaned text for future processing. For the cleaning process, it mainly uses techniques from regex, and for tokenization, it uses the simple split() method.
+
 [Back to Top](#architecture-description)
 
 ---
@@ -104,6 +108,7 @@ The CleanService is responsible for removing excess characters and symbols and t
         MarkovModel ->> MainView: Finished model
 ```
 The Markov model components' responsibilities include the creation of the Markov chain based on the tokenized source text and the user-defined degree. After creating the instance of the Trie entity, the program loops through the tokenized source text and inserts the sequences of words into the Trie data structure according to the degree.
+
 [Back to Top](#architecture-description)
 
 ---
@@ -128,6 +133,7 @@ The Markov model components' responsibilities include the creation of the Markov
         GenerateService ->> MainView: generated text
 ```
 The Generate service works with the Markov model to generate text. It takes the created model, gets a starting sequence, and from then on, obtains the current sequences children to calculate probability in between them. The service then chooses the next word from the children with the weighted average of their chance.
+
 [Back to Top](#architecture-description)
 
 ---
@@ -149,6 +155,7 @@ The Generate service works with the Markov model to generate text. It takes the 
     }
 ```
 Represents a node in a Trie data structure
+
 [Back to Top](#architecture-description)
 
 ---
@@ -170,6 +177,7 @@ Represents a node in a Trie data structure
         Trie --o TrieNode
 ```
 The Trie entity represents the core data structure. It provides a great way to store the Markov chain in the O(n) time-complexity model. The way it works is similar to any other k-search tree. We should start by demonstrating a trie data structure with a third-degree Markov chain. Let us explore the sentence, "I walked my dog the other day and saw a beautiful fountain." The program needs to save every 4-word sequence into the Trie data structure to build a third-degree chain which means that sequences; "I walked my dog," "walked my dog the," "my dog the other," "dog the other day," "the other day and," "other day and saw," "day and saw a," "and saw a beautiful," "saw a beautiful fountain." are inserted into the Trie data structure(note that this is not the best example out there).
+
 [Back to Top](#architecture-description)
 
 ---
