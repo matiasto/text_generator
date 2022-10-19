@@ -1,8 +1,7 @@
 from threading import Thread
+from tkinter import messagebox
 from services import ReadService, CleanService, MarkovModel, GenerateService
 from ..frames import InputFrame, SelectFrame, ValueFrame, TextFrame, LoadingFrame
-
-# Todo caching
 
 
 class MainView:
@@ -33,16 +32,27 @@ class MainView:
         self.__markov_model = None
         self.__read_service = ReadService()
         self.__available_stories = None
+        self.__current_sequence = ""
         self.__frames = {}
         self.__data = ""
         self.__degree = 3
         self.__limit = 100
         self.__initialize()
 
-    def __handle_generate_text(self) -> None:
+    def __handle_retrieve_children(self, sequence=None) -> None:
+        """Pass on function for the retrieve children method.
+
+        Args:
+            sequence (list): The sequence of the generated text.
+        """
+
+        return self.__retrieve_children(sequence)
+
+    def __handle_generate_text(self, original="", sequence=None) -> None:
         """Pass on function for the generate button."""
 
-        self.__generate_text()
+        self.__current_sequence = original
+        self.__generate_text(sequence)
 
     def __handle_change_model(self, title: str) -> None:
         """Pass on function for the select frame.
@@ -80,7 +90,7 @@ class MainView:
             frame = self.__frames["input"]
             frame.destroy()
         self.__frames["input"] = InputFrame(
-            self.__root, self.__handle_generate_text)
+            self.__root, self.__current_sequence, self.__handle_retrieve_children, self.__handle_generate_text)
         self.__frames["input"].pack()
 
     def __show_select_frame(self) -> None:
@@ -121,11 +131,31 @@ class MainView:
         self.__frames["loading"] = LoadingFrame(self.__root)
         self.__frames["loading"].pack()
 
-    def __monitor(self, running_thread) -> None:
-        """Monitors the running thread."""
+    def __show_error_message(self, message: str) -> None:
+        """Shows an error message.
 
-        if running_thread.is_alive():
-            self.__root.after(100, lambda: self.__monitor(running_thread))
+        Args:
+            message (str): The error message.
+        """
+
+        self.__root.withdraw()
+        messagebox.showerror("Error", message)
+        self.__root.deiconify()
+
+    # method for monitoring the active threads
+    def __monitor_thread(self, active_thread) -> None:
+        """Monitors the active thread.
+
+        Args:
+            active_thread (Thread): The active thread.
+        """
+
+        if active_thread.is_alive():
+            self.__root.after(
+                100, lambda: self.__monitor_thread(active_thread))
+        else:
+            self.__current_sequence = ""
+            self.__update_frames()
 
     def __loading_screen(func):
         """Decorator to show the loading screen while creating the model."""
@@ -134,21 +164,46 @@ class MainView:
             self.__show_loading_screen()
             thread = Thread(target=func, args=(self, *args), kwargs=kwargs)
             thread.start()
-            self.__monitor(thread)
+            self.__monitor_thread(thread)
         return wrapper
 
+    def __retrieve_children(self, sequence) -> None:
+        """Retrieves the children of the sequence.
+
+        Args:
+            sequence (list): The sequence of the generated text.
+        """
+        if not sequence:
+            return list(self.__markov_model.model.get_children(sequence).keys())
+
+        children = None
+        if len(sequence) > self.__degree:
+            children = self.__markov_model.model.get_children(
+                sequence[-self.__degree:])
+        else:
+            children = self.__markov_model.model.get_children(sequence)
+
+        if children:
+            sequence_str = " ".join(sequence)
+            return [sequence_str + " " + i for i in list(children.keys())]
+        return []
+
     @__loading_screen
-    def __generate_text(self) -> None:
+    def __generate_text(self, sequence) -> None:
         """Generates the text based on current model and values."""
 
-        starting_word = self.__markov_model.get_random_starting_sequence()
+        if sequence is None:
+            sequence = []
+        sequence = self.__markov_model.form_the_starting_sequence(sequence)
+        if not sequence:
+            self.__show_error_message(
+                "Could not generate sequence.\nGenerating a random sequence.")
+            sequence = self.__markov_model.form_the_starting_sequence([])
         generate = GenerateService(
-            starting_word, self.__markov_model.model, self.__degree, self.__limit)
+            sequence, self.__markov_model.model, self.__degree, self.__limit)
         self.__data = generate.generated_text
         if not self.__data:
-            self.__show_error_message()
-        else:
-            self.__update_frames()
+            self.__show_error_message("Could not generate text.")
 
     @__loading_screen
     def __change_model(self, title: str) -> None:
@@ -162,7 +217,6 @@ class MainView:
         clean_service = CleanService(self.__read_service.text)
         self.__markov_model = MarkovModel(
             clean_service.clean_text, self.__degree)
-        self.__update_frames()
 
     def __update_frames(self) -> None:
         """Updates the frames."""
@@ -176,10 +230,9 @@ class MainView:
 
     def __initialize(self) -> None:
         """Initializes the view."""
-        
+
         self.__available_stories = self.__read_service.available_stories
-        story = self.__available_stories[0]
-        self.__read_service.text = story
+        self.__read_service.text = self.__available_stories[0]
         clean_service = CleanService(self.__read_service.text)
         self.__markov_model = MarkovModel(clean_service.clean_text, 3)
         self.__update_frames()

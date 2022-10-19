@@ -52,9 +52,8 @@ class CleanService:
     def __clean(self) -> None:
         """Cleans the text"""
 
-        self.__text = re.sub(r'--', ' ', self.__text)
-        self.__text = re.sub('[\[].*?[\]]', '', self.__text)
-        self.__text = re.sub(r'(\b|\s+\-?|^\-?)(\d+|\d*\.\d+)\b','', self.__text)
+        self.__text = re.sub(r"[^A-Za-z\.\!\?\'\,]", " ", self.__text)
+        self.__text = self.__text.lower()
         self.__text = ' '.join(self.__text.split())
 
     def __tokenize(self) -> None:
@@ -68,4 +67,3 @@ class CleanService:
         self.__remove_meta_info()
         self.__clean()
         self.__tokenize()
-

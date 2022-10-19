@@ -11,8 +11,9 @@ class PerformanceTest:
         self.read_service = ReadService()
         self.results = []
 
-    def time(func): 
+    def time(func):
         wraps(func)
+
         def wrapper(*args, **kwargs):
             point = namedtuple("point", "degree time")
             start = perf_counter()
@@ -46,6 +47,7 @@ class PerformanceTest:
         plt.show(block=False)
         plt.pause(15)
         plt.close()
+
 
 if __name__ == "__main__":
     performance_test = PerformanceTest()

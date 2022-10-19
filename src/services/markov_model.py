@@ -37,12 +37,18 @@ class MarkovModel:
 
         return self.__model
 
-    def get_random_starting_sequence(self) -> str:
-        """Returns a random starting sequence from the Trie data structure"""
+    def form_the_starting_sequence(self, sequence):
+        """Adds the missing words in a sequence
 
-        sequence = []
-        for _ in range(self.__degree):
+        Args:
+            sequence (list): The sequence to check
+        """
+
+        while len(sequence) < self.__degree:
             children = self.__model.get_children(sequence)
+            if not children:
+                sequence = ""
+                break
             sequence.append(choice(list(children.keys())))
         return sequence
 

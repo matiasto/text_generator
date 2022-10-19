@@ -15,7 +15,7 @@ class GenerateService:
         generate (function): The function that generates the text
     """
 
-    def __init__(self, start_state: str, model: object, degree: int, limit=10) -> None:
+    def __init__(self, sequence: list, model: object, degree: int, limit=10) -> None:
         """Inits GenerateService with the start state, model and limit
 
         Args:
@@ -26,7 +26,7 @@ class GenerateService:
                                     picked from the model. Defaults to 10.
         """
 
-        self.__start_state = start_state
+        self.__sequence = sequence
         self.__limit = limit
         self.__model = model
         self.__degree = degree
@@ -55,8 +55,8 @@ class GenerateService:
     def __generate(self) -> None:
         """Generates text based on the model"""
 
-        sequence = self.__start_state
-        for _ in range(self.__limit):
+        sequence = self.__sequence
+        while len(sequence) < self.__limit:
             children = self.__model.get_children(sequence[-self.__degree:])
             probability = self.__calculate_probability(children)
             word = choices(list(probability.keys()),

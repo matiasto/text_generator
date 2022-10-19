@@ -38,13 +38,17 @@ class TextFrame:
     def __set_text(self) -> None:
         """Sets the text to disabled text widget."""
 
-        text = Text(self.__frame, height=10, width=100)
+        label_frame = ttk.LabelFrame(self.__frame, text="Generated text")
+
+        text = Text(label_frame, height=10, width=100)
         text.pack(expand=True)
         text.insert('insert', self.__data)
         text.config(state='disabled')
 
+        label_frame.grid(row=4, column=0, columnspan=5, sticky=(constants.W))
+
     def __initialize(self) -> None:
         """Initializes the frame."""
 
-        self.__frame = ttk.Labelframe(self.__root, text="Generated text")
+        self.__frame = ttk.Frame(self.__root)
         self.__set_text()

@@ -4,7 +4,7 @@ from tkinter import StringVar, ttk, constants, messagebox
 class ValueFrame:
     """Frame for the selecting the the degree of the model
     and the limit of the generated text.
-    
+
     Attributes:
         root (object): The root window
         frame (object): The frame
@@ -58,7 +58,7 @@ class ValueFrame:
         """
 
         current = self.__tmp_degree.get()
-        if not current or not current.isdigit() or int(current) < 1 or int(current) > 20:
+        if not current or not current.isdigit() or int(current) < 1 or int(current) > 100:
             messagebox.showerror(
                 "Error", "degree must be a number between 1 and 20")
             self.__tmp_degree.set(str(self.__degree))
@@ -86,13 +86,15 @@ class ValueFrame:
 
     def __fields(self) -> None:
         """Creates the fields."""
-        
-        entry_degree = ttk.Entry(self.__frame, textvariable=self.__tmp_degree)
-        entry_limit = ttk.Entry(self.__frame, textvariable=self.__tmp_limit)
+
+        label_frame = ttk.LabelFrame(
+            self.__frame, text="Degree and limit")
+        entry_degree = ttk.Entry(label_frame, textvariable=self.__tmp_degree)
+        entry_limit = ttk.Entry(label_frame, textvariable=self.__tmp_limit)
         button_degree = ttk.Button(
-            self.__frame, text="Change Degree", command=lambda: self.__event_change_degree())
+            label_frame, text="Change Degree", command=lambda: self.__event_change_degree())
         button_limit = ttk.Button(
-            self.__frame, text="Change Limit", command=lambda: self.__event_change_limit())
+            label_frame, text="Change Limit", command=lambda: self.__event_change_limit())
 
         entry_degree.grid(
             row=0, column=0, sticky=constants.W, **self.__options)
@@ -102,8 +104,10 @@ class ValueFrame:
         button_limit.grid(
             row=1, column=1, sticky=constants.W, **self.__options)
 
+        label_frame.grid(row=3, column=0, columnspan=5, sticky=(constants.W))
+
     def __initialize(self) -> None:
         """Initializes the frame."""
 
-        self.__frame = ttk.Labelframe(master=self.__root)
+        self.__frame = ttk.Frame(master=self.__root)
         self.__fields()

@@ -51,7 +51,7 @@ class SelectFrame:
 
     def __generate_buttons(self) -> None:
         """Creates the radiobuttons for each model.
-        
+
         binds 'change_model' to each button.
         """
 
@@ -63,7 +63,7 @@ class SelectFrame:
             self.__buttons[-1].grid(sticky='WENS',
                                     row=index, column=0, padx=1, pady=1)
             index += 1
-        label_frame.grid(row=1, column=0, columnspan=5, sticky=(constants.W))
+        label_frame.grid(row=2, column=0, columnspan=5, sticky=(constants.W))
 
     def __initialize(self) -> None:
         """Initializes the frame."""

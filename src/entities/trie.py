@@ -13,7 +13,7 @@ class Trie:
     def __init__(self) -> None:
         """Initializes the trie"""
 
-        self.root = TrieNode()
+        self.__root = TrieNode()
 
     def insert(self, sequence) -> None:
         """Inserts a sequence into the trie.
@@ -22,7 +22,7 @@ class Trie:
             sequence (list): The word sequence to be inserted.
         """
 
-        node = self.root
+        node = self.__root
         for word in sequence:
             if word not in node.children:
                 node.children[word] = TrieNode()
@@ -40,7 +40,7 @@ class Trie:
             dict: The children of the sequence.
         """
 
-        node = self.root
+        node = self.__root
         if not sequence:
             return node.children
         for word in sequence:
