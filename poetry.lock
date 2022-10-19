@@ -442,6 +442,17 @@ slack = ["slack-sdk"]
 telegram = ["requests"]
 
 [[package]]
+name = "ttkwidgets"
+version = "0.12.1"
+description = "A collection of widgets for Tkinter's ttk extensions by various authors"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+pillow = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -460,7 +471,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "3a3c90cdc52a24644da57522c939660248709e0e0f9ee628423aff514c3fd29e"
+content-hash = "831ad71040161c8b4ebe6889ac9a8100a7fec0884953b308bbd0f5932719cfd4"
 
 [metadata.files]
 astroid = []
@@ -586,6 +597,7 @@ tomli = [
 ]
 tomlkit = []
 tqdm = []
+ttkwidgets = []
 typing-extensions = []
 wrapt = [
     {file = "wrapt-1.14.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:1b376b3f4896e7930f1f772ac4b064ac12598d1c38d04907e696cc4d794b43d3"},
