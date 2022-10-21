@@ -2,27 +2,29 @@ from .trie_node import TrieNode
 
 
 class Trie:
-    """ Represents a trie data structure.
+    """ Represents a Trie data structure.
 
-    The trie is used to store sequences of words and their frequencies.
+    The Trie is used to store sequences of words and their frequencies.
 
     Attributes:
-        root (TrieNode): The root node of the trie.
+        root (TrieNode): The root node of the Trie.
     """
 
     def __init__(self) -> None:
-        """Initializes the trie"""
+        """Initializes the Trie"""
 
-        self.__root = TrieNode()
+        self.root = TrieNode()
 
     def insert(self, sequence) -> None:
-        """Inserts a sequence into the trie.
+        """Inserts a sequence into the Trie.
+
+        Existing sequences will have their frequency increased.
 
         Args:
             sequence (list): The word sequence to be inserted.
         """
 
-        node = self.__root
+        node = self.root
         for word in sequence:
             if word not in node.children:
                 node.children[word] = TrieNode()
@@ -37,10 +39,10 @@ class Trie:
             sequence (list): The sequence to get the children of.
 
         Returns:
-            dict: The children of the sequence.
+            dict: The children nodes of the sequence.
         """
 
-        node = self.__root
+        node = self.root
         if not sequence:
             return node.children
         for word in sequence:

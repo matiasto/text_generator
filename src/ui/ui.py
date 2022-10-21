@@ -4,7 +4,7 @@ from .views import MainView
 class UI:
     """The main UI.
 
-    Manages all the views.
+    Manages the MainView.
 
     Attributes:
         root: The root window.

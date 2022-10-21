@@ -7,7 +7,7 @@ class GenerateService:
     Given a start state and a model, generates text based on the model.
 
     Attributes:
-        start_state (str): The starting state of the model
+        sequence (list): The sequence to be used as the start state
         limit (int): The number of words to be generated
         model (object): The model to be used for generating text
         degree (int): The degree of the model
@@ -19,7 +19,7 @@ class GenerateService:
         """Inits GenerateService with the start state, model and limit
 
         Args:
-            start_state (str): The starting state of the model
+            sequence (list): The sequence to be used as the start state
             model (object): The model to be used for generating text
             degree (int): The degree of the model
             limit (int, optional): The limit of how many keys are
@@ -33,8 +33,14 @@ class GenerateService:
         self.__generated_text = ""
         self.__generate()
 
+    @property
+    def generated_text(self) -> str:
+        """Returns the generated text as string"""
+
+        return self.__generated_text
+
     def __calculate_probability(self, children: dict) -> dict:
-        """Calculates the probability of children
+        """Calculates the probability of each children node.
 
         Args:
             children (dict): The children of the current state
@@ -46,14 +52,8 @@ class GenerateService:
         total = sum([i.frequency for i in children.values()])
         return {word: value.frequency / total for word, value in children.items()}
 
-    @property
-    def generated_text(self) -> str:
-        """Returns the generated text as string"""
-
-        return self.__generated_text
-
     def __generate(self) -> None:
-        """Generates text based on the model"""
+        """Generates text based on the model, degree and limit"""
 
         sequence = self.__sequence
         while len(sequence) < self.__limit:

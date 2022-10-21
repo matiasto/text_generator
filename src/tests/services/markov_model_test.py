@@ -15,10 +15,14 @@ class TestMarkovModel(unittest.TestCase):
     def test_get_degree(self):
         self.assertEqual(self.markov_model.degree, 2)
 
-    def test_get_random_starting_sequence(self):
+    def test_form_the_starting_sequence(self):
         self.assertEqual(
-            len(self.markov_model.get_random_starting_sequence()), 2)
+            len(self.markov_model.form_the_starting_sequence([])), 2)
+
+    def test_form_the_starting_sequence_invalid_children(self):
+        self.assertEqual(
+            self.markov_model.form_the_starting_sequence(["Z"]), [])
 
     def test_get_random_starting_word_type(self):
         self.assertEqual(
-            type(self.markov_model.get_random_starting_sequence()), list)
+            type(self.markov_model.form_the_starting_sequence([])), list)

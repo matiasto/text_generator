@@ -40,6 +40,9 @@ class MarkovModel:
     def form_the_starting_sequence(self, sequence):
         """Adds the missing words in a sequence
 
+        generates missing words in a sequence based 
+        on the degree of the model.
+
         Args:
             sequence (list): The sequence to check
         """
@@ -47,8 +50,7 @@ class MarkovModel:
         while len(sequence) < self.__degree:
             children = self.__model.get_children(sequence)
             if not children:
-                sequence = ""
-                break
+                return []
             sequence.append(choice(list(children.keys())))
         return sequence
 

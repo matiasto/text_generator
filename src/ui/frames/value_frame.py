@@ -2,8 +2,15 @@ from tkinter import StringVar, ttk, constants, messagebox
 
 
 class ValueFrame:
-    """Frame for the selecting the the degree of the model
+    """Frame for selecting the degree of the model
     and the limit of the generated text.
+
+    On degree change, the model is retrained.
+    On limit change, the limit of the generated text is changed.
+
+    The Degree change initiates the model change immediately, 
+    which can take a while depending on the size of the corpus and the degree.
+    Limit change only affects the next generated text.
 
     Attributes:
         root (object): The root window
@@ -16,7 +23,7 @@ class ValueFrame:
         tmp_limit (object): The temporary limit to hold the entry value
         options (dict): The options for the frame
         initialize (func): Initializes the frame
-        """
+    """
 
     def __init__(self, root: object, degree: int, limit: int, handle_change_degree, handle_change_limit) -> None:
         """Initializes the frame.
@@ -53,6 +60,11 @@ class ValueFrame:
     def __event_change_degree(self, event=None) -> None:
         """Handles the change degree event.
 
+        Entered value must be a number between 1 and 100.
+        On change, the model is retrained based on the new degree.
+        The model can take a while to retrain depending on the size of the corpus and the degree.
+
+
         Args:
             event (_type_, optional): Defaults to None.
         """
@@ -70,6 +82,7 @@ class ValueFrame:
         """Handles the change limit event.
 
         Entered value must be a number between 1 and 100.
+        On change, the limit of the generated text is changed.
 
         Args:
             event (optional): Defaults to None.

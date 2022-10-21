@@ -4,6 +4,8 @@ from tkinter import ttk, constants
 class LoadingFrame:
     """Frame for the loading screen.
 
+    The loading screen is shown every time the user changes the underlying model.
+
     Attributes:
         root (object): The root window
         frame (object): The frame

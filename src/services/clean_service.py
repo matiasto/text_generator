@@ -6,11 +6,13 @@ class CleanService:
 
     Firstly removes copyright information and other non-textual information
     from the text. Then converts all characters to lowercase and removes
-    punctuation and other disallowed characters. Finally, tokenizes the text
-    into a list of words.
+    some punctuation and other disallowed characters. Finally, tokenizes 
+    the text into a list of words.
 
     Attributes:
         text (str): The text to be cleaned
+        clean_text (list): The cleaned text as a list of words
+        initialize (function): Initializes the CleanService
     """
 
     def __init__(self, text: str) -> None:

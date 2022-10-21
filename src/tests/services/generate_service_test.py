@@ -9,7 +9,7 @@ class TestGenerateService(unittest.TestCase):
         read_service.text = "Alice in Wonderland"
         clean_service = CleanService(read_service.text)
         markov_model = MarkovModel(clean_service.clean_text, 2)
-        starting_word = markov_model.get_random_starting_sequence()
+        starting_word = markov_model.form_the_starting_sequence([])
         self.generate_service = GenerateService(
             starting_word, markov_model.model, 2)
 
@@ -26,7 +26,7 @@ class TestGenerateService(unittest.TestCase):
         self.assertEqual(probability, {"a": 0.6, "b": 0.4})
 
     def test_generated_text(self):
-        self.assertEqual(len(self.generate_service.generated_text.split()), 12)
+        self.assertEqual(len(self.generate_service.generated_text.split()), 10)
 
     def test_generated_text_type(self):
         self.assertEqual(type(self.generate_service.generated_text), str)

@@ -4,6 +4,10 @@ from tkinter import ttk, constants, Radiobutton, StringVar
 class SelectFrame:
     """Frame for the selecting the underlying model.
 
+    This Frame presets the user with a list of available training
+    sources and allows the user to select one of them. The selected
+    model is then used to train the model.
+
     Attributes:
         root (object): The root window
         frame (object): The frame
@@ -18,7 +22,7 @@ class SelectFrame:
         """Initializes the frame.
 
         Args:
-            root (object): _description_
+            root (object): The root window
             current_title (str): the active title
             available_data (dict)): available titles
             handle_change_model (func): The function to handle the change model event
@@ -43,7 +47,10 @@ class SelectFrame:
         self.__frame.destroy()
 
     def __change_model(self, event=None) -> None:
-        """Handles the change model event."""
+        """Handles the change model event.
+
+        Calls the handle_change_model function with the selected model.
+        """
 
         new_value = self.__button_val.get()
         self.__handle_change_model(new_value)
@@ -52,7 +59,7 @@ class SelectFrame:
     def __generate_buttons(self) -> None:
         """Creates the radiobuttons for each model.
 
-        binds 'change_model' to each button.
+        binds 'change_model' method to each button.
         """
 
         label_frame = ttk.Labelframe(self.__frame)

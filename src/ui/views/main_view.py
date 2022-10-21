@@ -9,6 +9,11 @@ class MainView:
 
     Handles the user input and updates the view.
 
+    On events that change the model, the view will show a loading screen
+    while a new model is created on a separate thread. The view will
+    monitor the thread and update the frames when the thread is finished.
+    Updated values will be passed on to the new frames.
+
     Attributes:
         root (object): The root window, Tk() instance.
         markov_model (MarkovModel): The markov model instance.
@@ -40,7 +45,7 @@ class MainView:
         self.__initialize()
 
     def __handle_retrieve_children(self, sequence=None) -> None:
-        """Pass on function for the retrieve children method.
+        """Pass on function for the retrieve_children method.
 
         Args:
             sequence (list): The sequence of the generated text.
@@ -49,13 +54,15 @@ class MainView:
         return self.__retrieve_children(sequence)
 
     def __handle_generate_text(self, original="", sequence=None) -> None:
-        """Pass on function for the generate button."""
+        """Pass on function for the generate_text method."""
 
         self.__current_sequence = original
         self.__generate_text(sequence)
 
     def __handle_change_model(self, title: str) -> None:
-        """Pass on function for the select frame.
+        """Pass on function for the select frames title selection.
+
+        Initializes a new model with the new title.
 
         Args:
             title (str): The title of the selected story.
@@ -64,7 +71,9 @@ class MainView:
         self.__change_model(title)
 
     def __handle_change_degree(self, degree: int) -> None:
-        """Pass on function for the value frame.
+        """Pass on function for the value frames degree field.
+
+        Initializes a new model with the new degree.
 
         Args:
             degree (int): New degree of the markov model.
@@ -74,7 +83,10 @@ class MainView:
         self.__change_model(self.__read_service.title)
 
     def __handle_change_limit(self, limit: int) -> None:
-        """Pass on function for the value frame.
+        """Pass on function for the value frames limit field.
+
+        Sets the limit of the generated text.
+        Only affects the following text generations.
 
         Args:
             limit (int): New limit of the generated text.
@@ -124,7 +136,12 @@ class MainView:
         self.__frames["text"].pack()
 
     def __show_loading_screen(self) -> None:
-        """Shows the loading screen while creating the model."""
+        """Shows the loading screen 
+
+        Appears while the model is being created in a parallel thread.
+        After the thread is finished, the loading screen will be destroyed
+        and the new frames will be shown.
+        """
 
         for frame in self.__frames.values():
             frame.destroy()
@@ -146,6 +163,12 @@ class MainView:
     def __monitor_thread(self, active_thread) -> None:
         """Monitors the active thread.
 
+        Checks if the thread is still active every 100ms.
+        If the thread is finished, the loading screen will be destroyed
+        and the new frames will be shown.
+
+        Addtionally, the current start state will be emptied.
+
         Args:
             active_thread (Thread): The active thread.
         """
@@ -158,7 +181,13 @@ class MainView:
             self.__update_frames()
 
     def __loading_screen(func):
-        """Decorator to show the loading screen while creating the model."""
+        """Decorator to show the loading screen while creating the model.
+
+        The decorator handles the creation of the model in a separate thread.
+        The loading screen will be shown while the thread is active.
+        After the thread is finished, the loading screen will be destroyed
+        and the new frames will be shown.
+        """
 
         def wrapper(self, *args, **kwargs):
             self.__show_loading_screen()
@@ -167,12 +196,18 @@ class MainView:
             self.__monitor_thread(thread)
         return wrapper
 
-    def __retrieve_children(self, sequence) -> None:
+    def __retrieve_children(self, sequence) -> list:
         """Retrieves the children of the sequence.
+
+        Used for the autocomplete feature in the input frame.
 
         Args:
             sequence (list): The sequence of the generated text.
+
+        Returns:
+            list: The updated autocomplete list.
         """
+
         if not sequence:
             return list(self.__markov_model.model.get_children(sequence).keys())
 
@@ -190,7 +225,15 @@ class MainView:
 
     @__loading_screen
     def __generate_text(self, sequence) -> None:
-        """Generates the text based on current model and values."""
+        """Generates the text.
+
+        Given a starting sequence, the method will first complete the sequence
+        to meet the degree of the model. Then, the existing model will be used
+        to generate the text.
+
+        Args:
+            sequence (list): The possible starting sequence from the user input; a list of strings.
+        """        
 
         if sequence is None:
             sequence = []
@@ -207,10 +250,13 @@ class MainView:
 
     @__loading_screen
     def __change_model(self, title: str) -> None:
-        """Changes the model based on the selected story.
+        """Retrains the model with a new story.
+
+        Given a title, the method will retrieve the story from the file.
+        Then, after cleaning the text, the model will be retrained with the new story.
 
         Args:
-            title (str): The title of the selected story.
+            title (str): The title of the new story.
         """
 
         self.__read_service.text = title

@@ -4,11 +4,13 @@ from tkinter import ttk, constants, Text
 class TextFrame:
     """Frame for the generated text.
 
+    This Frame displays the generated text. Updates when
+    the generate button is pressed.
+
     Attributes:
         root (object): The root window
         frame (object): The frame
         data (str): The generated text
-        options (dict): The options for the frame
         initialize (func): Initializes the frame
     """
 
@@ -36,7 +38,7 @@ class TextFrame:
         self.__frame.destroy()
 
     def __set_text(self) -> None:
-        """Sets the text to disabled text widget."""
+        """Sets the generated text to 'disabled' text widget."""
 
         label_frame = ttk.LabelFrame(self.__frame, text="Generated text")
 

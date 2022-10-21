@@ -1,5 +1,5 @@
 class TrieNode:
-    """ Represents a node in the trie. """
+    """ Represents a node in the Trie datastructure. """
 
     def __init__(self):
         self.children = {}
