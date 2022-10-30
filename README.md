@@ -2,7 +2,7 @@
 
 ---
 
-[Latest Week Report](./docs/weekly_reports/week_6.md)
+[Final Release](https://github.com/matiasto/text_generator/releases/tag/loppupalautus)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -14,7 +14,7 @@
 
 ## Introduction
 
-todo
+This app is the tiralabra course project. The app is a text generator that uses Markov Chain and Trie data structure to imitate natural language generation.
 
 ## Getting Started
 
