@@ -9,4 +9,8 @@ Record of Working Hours
 | 1.10.  | 8     | UI, tests                                              |
 | 8.10.  | 8     | UI, docs                                               |
 | 15.10. | 8     | docs                                                   |
-| Total  | 40    |                                                        |
+| 19.10. | 10    | docs and autocomplete                                  |
+| 20.10. | 7     | testing and performance                                |
+| 25.10. | 2     | docs                                                   |
+| 30.10. | 4     | docs                                                   |
+| Total  | 63    |                                                        |
