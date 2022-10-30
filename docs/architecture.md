@@ -15,6 +15,7 @@
     - [Trie](#trie)
 - [Structure as a Whole](#structure-as-a-whole)
 - [Main Functionality](#main-functionality)
+- [Big O Analysis](#big-o-analysis)
 
 ---
 
@@ -241,3 +242,9 @@ The user changes the source title and generates text (simplified version)
         MainView ->> User: generated text
 ```
 [Back to Top](#architecture-description)
+
+---
+
+## Big O Analysis
+
+The program achieved the exact time- and space complexity noted in the [requirements specification](./requirements_specification.md). For performance testing, please refer to the testing document[testing document](./testing.md).

@@ -35,17 +35,22 @@ class PerformanceTest:
             self.results.append(point)
 
     def plot_results(self):
-        x = np.array([i.degree for i in self.results])
+        x = np.array([int(i.degree) for i in self.results])
         y = np.array([i.time for i in self.results])
 
         plt.scatter(x, y)
+        plt.xticks(x)
+
+        plt.title("performance")
+        plt.xlabel("degree")
+        plt.ylabel("time(s)")
 
         z = np.polyfit(x, y, 1)
         p = np.poly1d(z)
 
         plt.plot(x, p(x))
         plt.show(block=False)
-        plt.pause(15)
+        plt.pause(30)
         plt.close()
 
 
